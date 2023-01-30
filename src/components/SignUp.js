@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignUp = () => {
   const [message, setMessage] = useState("");
@@ -36,22 +37,23 @@ const SignUp = () => {
   const Sign = (e) => {
     e.preventDefault();
     if (emailRegex.test(email) && validityPw.test(pw)) {
-      fetch("https://pre-onboarding-selection-task.shop/auth/signup", {
-        method: "POST",
-        headers: {
+      axios({
+        method: "post",
+        url: "https://pre-onboarding-selection-task.shop/auth/signup",
+        Headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
+        data: {
           email: `${email}`,
           password: `${pw}`,
-        }),
+        },
       })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.error) {
-            return alert(data.message);
-          }
+        .then((res) => {
+          console.log(res);
           navigate("/signin");
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
         });
     }
   };

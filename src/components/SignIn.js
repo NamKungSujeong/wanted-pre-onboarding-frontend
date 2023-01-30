@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 const SignIn = () => {
   const [message, setMessage] = useState("");
@@ -34,19 +35,24 @@ const SignIn = () => {
   const login = (e) => {
     e.preventDefault();
 
-    fetch("https://pre-onboarding-selection-task.shop/auth/signin", {
-      method: "POST",
-      headers: {
+    axios({
+      method: "post",
+      url: "https://pre-onboarding-selection-task.shop/auth/signin",
+      Headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
+      data: {
         email: `${email}`,
         password: `${pw}`,
-      }),
+      },
     })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-    navigate("/signin");
+      .then((res) => {
+        console.log(res);
+        navigate("/todo");
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
   };
   return (
     <SigninForm>
