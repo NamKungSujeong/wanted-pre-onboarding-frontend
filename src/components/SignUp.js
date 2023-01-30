@@ -47,10 +47,12 @@ const SignUp = () => {
         }),
       })
         .then((response) => response.json())
-        .then((data) => console.log(data));
-      navigate("/signin");
-    } else {
-      console.log("error");
+        .then((data) => {
+          if (data.error) {
+            return alert(data.message);
+          }
+          navigate("/signin");
+        });
     }
   };
 
