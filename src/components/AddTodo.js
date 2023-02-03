@@ -1,8 +1,22 @@
+import { useEffect } from "react";
+import client from "../shared/Request";
+
 const AddTodo = () => {
+  // const [todoItems, setTodoItems] = useState([]);
+
+  useEffect(() => {
+    const getTodo = () => {
+      client.get("/todos").then((res) => {
+        console.log(res);
+      });
+    };
+    getTodo();
+  });
+
   const LogOut = () => {
     localStorage.getItem("access_token");
     localStorage.clear();
-    window.location.replace("http://localhost:3001/");
+    window.location.replace("/");
   };
   return (
     <div>
