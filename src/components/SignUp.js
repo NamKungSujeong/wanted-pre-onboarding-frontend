@@ -8,29 +8,38 @@ const SignUp = () => {
   const [pwmessage, setPwMessage] = useState("");
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
+  const [disabled, setDisabled] = useState(true);
+
   let navigate = useNavigate();
 
   const emailRegex =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
   const validityPw = /^(?=.*[a-zA-Z0-9]).{7,}$/;
 
-  const Validation = (e) => {
+  const btnDisabled = () => {
+    if (emailRegex.test(email) && validityPw.test(pw)) {
+      setDisabled(false);
+    }
+  };
+  const EmailValidation = (e) => {
     setEmail(e.target.value);
 
     if (!emailRegex.test(email)) {
       setMessage("이메일 형식이 올바르지 않습니다.");
     } else {
       setMessage("");
+      btnDisabled();
     }
   };
 
-  const Pwvalidation = (e) => {
-    setPw(e.currentTarget.value);
+  const PwValidation = (e) => {
+    setPw(e.target.value);
 
     if (!validityPw.test(pw)) {
       setPwMessage("비밀번호 형식이 올바르지 않습니다.");
     } else {
       setPwMessage("");
+      btnDisabled();
     }
   };
 
@@ -66,7 +75,7 @@ const SignUp = () => {
         data-testid="email-input"
         placeholder="이메일을 입력해 주세요"
         value={email}
-        onChange={Validation}
+        onChange={EmailValidation}
       />
       <div>{message}</div>
       <input
@@ -75,10 +84,10 @@ const SignUp = () => {
         data-testid="password-input"
         placeholder="비밀번호를 입력해주세요"
         value={pw}
-        onChange={Pwvalidation}
+        onChange={PwValidation}
       />
       <div>{pwmessage}</div>
-      <button data-testid="signup-button" onClick={Sign}>
+      <button data-testid="signup-button" onClick={Sign} disabled={disabled}>
         회원가입
       </button>
       <Link to="/">홈</Link>

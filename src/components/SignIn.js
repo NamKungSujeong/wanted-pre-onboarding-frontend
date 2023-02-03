@@ -1,15 +1,22 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const SignIn = () => {
+  useEffect(() => {
+    if (localStorage.getItem("access_token") !== null) {
+      window.location.replace("/todo");
+    }
+  }, []);
+
   const [message, setMessage] = useState("");
   const [pwmessage, setPwMessage] = useState("");
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   let navigate = useNavigate();
 
+  // 유효성 검사
   const emailRegex =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
   const validityPw = /^(?=.*[a-zA-Z0-9]).{7,}$/;
@@ -32,6 +39,7 @@ const SignIn = () => {
       setPwMessage("");
     }
   };
+
   const login = (e) => {
     e.preventDefault();
 
@@ -42,18 +50,21 @@ const SignIn = () => {
         "Content-Type": "application/json",
       },
       data: {
-        email: `${email}`,
-        password: `${pw}`,
+        email: email,
+        password: pw,
       },
     })
       .then((res) => {
         console.log(res);
+        localStorage.setItem("access_token", res.data.access_token);
+        console.log("로그인 성공");
         navigate("/todo");
       })
       .catch((error) => {
         alert(error.response.data.message);
       });
   };
+
   return (
     <SigninForm>
       <input
