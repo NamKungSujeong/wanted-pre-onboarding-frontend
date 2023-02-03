@@ -30,12 +30,37 @@ const Todo = () => {
       });
   };
 
+  //   const updateTodo = async (updateItem) => {
+  //     await client
+  //       .put(`/todos/${updateItem.id}`, {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       })
+  //       .then((res) => {
+  //         console.log(res.data);
+  //       });
+  //   };
+
+  const deleteTodo = async (deleteItem) => {
+    await client
+      .delete(`/todos/${deleteItem.id}`)
+      .then((res) => console.log(res));
+  };
+
   return (
     <div>
       <AddTodo addTodo={addTodo} />
       {todoItems.length > 0 ? (
         todoItems.map((todo) => {
-          return <TodoList key={todo.id} todo={todo} />;
+          return (
+            <TodoList
+              key={todo.id}
+              todo={todo}
+              //   updateTodo={updateTodo}
+              deleteTodo={deleteTodo}
+            />
+          );
         })
       ) : (
         <div>Todo를 추가해 주세요</div>
