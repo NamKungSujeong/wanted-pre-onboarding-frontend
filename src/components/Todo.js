@@ -30,22 +30,30 @@ const Todo = () => {
       });
   };
 
-  //   const updateTodo = async (updateItem) => {
-  //     await client
-  //       .put(`/todos/${updateItem.id}`, {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       })
-  //       .then((res) => {
-  //         console.log(res.data);
-  //       });
-  //   };
+  const updateTodo = async (updateItem) => {
+    await client({
+      method: "put",
+      url: `/todos/${updateItem.id}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify({
+        todo: `${updateItem.todo}`,
+        isCompleted: updateItem.isCompleted,
+      }),
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+  };
 
   const deleteTodo = async (deleteItem) => {
     await client
       .delete(`/todos/${deleteItem.id}`)
       .then((res) => console.log(res));
+    let newTodoItems = todoItems.filter((todo) => todo.id !== deleteItem.id);
+    setTodoItems(newTodoItems);
   };
 
   return (
@@ -57,7 +65,7 @@ const Todo = () => {
             <TodoList
               key={todo.id}
               todo={todo}
-              //   updateTodo={updateTodo}
+              updateTodo={updateTodo}
               deleteTodo={deleteTodo}
             />
           );

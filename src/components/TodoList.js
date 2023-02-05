@@ -1,12 +1,11 @@
 import { useState } from "react";
 
 const TodoList = ({ todo, deleteTodo, updateTodo }) => {
-  const { id, isComplete, userId } = todo;
+  const { id, isCompleted } = todo;
   const [todoItem, setTodoItem] = useState(todo);
   const [modify, setModify] = useState(false);
 
   const editEventHandler = (e) => {
-    // rest: id, done 정보
     const { todo, ...rest } = todoItem;
 
     setTodoItem({
@@ -14,6 +13,7 @@ const TodoList = ({ todo, deleteTodo, updateTodo }) => {
       ...rest,
     });
   };
+
   const modifyBtn = () => {
     setModify(true);
   };
@@ -22,10 +22,25 @@ const TodoList = ({ todo, deleteTodo, updateTodo }) => {
     deleteTodo(todoItem);
   };
 
-  // const submitBtn = () => {
-  //   updateTodo(todoItem);
-  //   setModify(false);
-  // };
+  const submitBtn = () => {
+    updateTodo(todoItem);
+    setModify(false);
+  };
+
+  const cancelBtn = () => {
+    setModify(false);
+  };
+
+  const checkboxhandler = (e) => {
+    const { isCompleted, ...rest } = todoItem;
+
+    const updateItem = {
+      isCompleted: e.target.checked,
+      ...rest,
+    };
+    setTodoItem(updateItem);
+    updateTodo(updateItem);
+  };
 
   return (
     <li>
@@ -35,7 +50,8 @@ const TodoList = ({ todo, deleteTodo, updateTodo }) => {
           id={`${id}`}
           className="check"
           name={`todo${id}`}
-          value={`todo${id}`}
+          defaultChecked={isCompleted}
+          onChange={checkboxhandler}
         />
         {modify ? (
           <>
@@ -45,8 +61,12 @@ const TodoList = ({ todo, deleteTodo, updateTodo }) => {
               value={todoItem.todo}
               onChange={editEventHandler}
             ></input>
-            <button data-testid="submit-button">제출</button>
-            <button data-testid="cancel-button">취소</button>
+            <button data-testid="submit-button" onClick={submitBtn}>
+              제출
+            </button>
+            <button data-testid="cancel-button" onClick={cancelBtn}>
+              취소
+            </button>
           </>
         ) : (
           <>
