@@ -27,7 +27,7 @@ const MainPageBlock = styled.main`
 `;
 
 const Intro = styled.section`
-  padding-top: 200px;
+  padding-top: 250px;
   font-size: 3rem;
 `;
 
