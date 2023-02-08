@@ -68,7 +68,9 @@ const SignUp = () => {
           navigate("/signin");
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          if (error.response.data.statusCode === 400) {
+            alert(error.response.data.message);
+          }
         });
     }
   };

@@ -1,8 +1,7 @@
-import "./App.css";
 import MainPage from "./pages/MainPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SignUp from "./components/SignUp";
-import SignIn from "./components/SignIn";
+import SignUp from "./pages/SignUpPage";
+import SignIn from "./pages/SignInPage";
 import TodoPage from "./pages/TodoPage";
 
 function App() {

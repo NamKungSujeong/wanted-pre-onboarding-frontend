@@ -10,34 +10,10 @@ const SignIn = () => {
     }
   }, []);
 
-  const [message, setMessage] = useState("");
-  const [pwmessage, setPwMessage] = useState("");
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
 
   // 유효성 검사
-  const emailRegex =
-    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-  const validityPw = /^(?=.*[a-zA-Z0-9]).{7,}$/;
-
-  const Validation = (e) => {
-    setEmail(e.target.value);
-
-    if (!emailRegex.test(email)) {
-      setMessage("이메일 형식이 올바르지 않습니다.");
-    } else {
-      setMessage("");
-    }
-  };
-
-  const Pwvalidation = (e) => {
-    setPw(e.currentTarget.value);
-    if (!validityPw.test(pw)) {
-      setPwMessage("비밀번호 형식이 올바르지 않습니다.");
-    } else {
-      setPwMessage("");
-    }
-  };
 
   const login = (e) => {
     e.preventDefault();
@@ -60,7 +36,9 @@ const SignIn = () => {
         window.location.replace("/todo");
       })
       .catch((error) => {
-        alert(error.response.data.message);
+        if (error.response.data.statusCode === 401) {
+          alert("아이디 또는 비밀번호를 확인해주세요");
+        }
       });
   };
 
@@ -72,18 +50,16 @@ const SignIn = () => {
         data-testid="email-input"
         placeholder="이메일을 입력해 주세요"
         value={email}
-        onChange={Validation}
+        onChange={(e) => setEmail(e.target.value)}
       />
-      <div>{message}</div>
       <input
         required
         type="password"
         data-testid="password-input"
         placeholder="비밀번호를 입력해주세요"
         value={pw}
-        onChange={Pwvalidation}
+        onChange={(e) => setPw(e.target.value)}
       />
-      <div>{pwmessage}</div>
       <button data-testid="signin-button" onClick={login}>
         로그인
       </button>
@@ -98,6 +74,8 @@ const SigninForm = styled.form`
   width: 300px;
   display: flex;
   flex-direction: column;
+  margin: auto;
+  padding-top: 200px;
 
   input {
     height: 35px;
