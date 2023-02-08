@@ -10,10 +10,12 @@ const Todo = () => {
     console.log("랜더링 성공");
     const getTodo = async () => {
       const res = await client.get("/todos");
+      console.log(res);
       setTodoItems(res.data);
     };
     getTodo();
   }, []);
+  console.log(todoItems);
 
   const addTodo = async (createTodo) => {
     const res = await client.post("/todos", createTodo, {
@@ -44,8 +46,6 @@ const Todo = () => {
     });
   };
 
-  console.log(todoItems);
-
   const deleteTodo = async (deleteItem) => {
     await client
       .delete(`/todos/${deleteItem.id}`)
@@ -58,11 +58,11 @@ const Todo = () => {
     <div>
       <AddTodo addTodo={addTodo} />
       {todoItems.length > 0 ? (
-        todoItems.map((todos) => {
+        todoItems.map((todo) => {
           return (
             <TodoList
-              key={todos.id}
-              todos={todos}
+              key={todo.id}
+              todo={todo}
               updateTodo={updateTodo}
               deleteTodo={deleteTodo}
             />

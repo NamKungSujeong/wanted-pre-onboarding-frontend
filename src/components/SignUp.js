@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -11,6 +11,12 @@ const SignUp = () => {
   const [disabled, setDisabled] = useState(true);
 
   let navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("access_token") !== null) {
+      window.location.replace("/todo");
+    }
+  }, []);
 
   const emailRegex =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;

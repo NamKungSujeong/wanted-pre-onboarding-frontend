@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-const TodoList = ({ todos, deleteTodo, updateTodo }) => {
-  const { isCompleted } = todos;
-  const [todoItem, setTodoItem] = useState(todos);
+const TodoList = ({ todo, deleteTodo, updateTodo }) => {
+  const { isCompleted } = todo;
+  const [todoItem, setTodoItem] = useState(todo);
   const [modify, setModify] = useState(false);
 
   // console.log(todos);
@@ -32,7 +32,7 @@ const TodoList = ({ todos, deleteTodo, updateTodo }) => {
 
   const cancelBtn = () => {
     setModify(false);
-    setTodoItem(todos);
+    setTodoItem(todo);
   };
 
   const checkboxhandler = (e) => {

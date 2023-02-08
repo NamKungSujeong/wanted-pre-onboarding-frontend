@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -14,7 +14,6 @@ const SignIn = () => {
   const [pwmessage, setPwMessage] = useState("");
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
-  let navigate = useNavigate();
 
   // 유효성 검사
   const emailRegex =
@@ -58,7 +57,7 @@ const SignIn = () => {
         console.log(res);
         localStorage.setItem("access_token", res.data.access_token);
         console.log("로그인 성공");
-        navigate("/todo");
+        window.location.replace("/todo");
       })
       .catch((error) => {
         alert(error.response.data.message);
