@@ -1,9 +1,12 @@
 import { useState } from "react";
 
-const TodoList = ({ todo, deleteTodo, updateTodo }) => {
-  const { id, isCompleted } = todo;
-  const [todoItem, setTodoItem] = useState(todo);
+const TodoList = ({ todos, deleteTodo, updateTodo }) => {
+  const { isCompleted } = todos;
+  const [todoItem, setTodoItem] = useState(todos);
   const [modify, setModify] = useState(false);
+
+  // console.log(todos);
+  // console.log(todoItem);
 
   const editEventHandler = (e) => {
     const { todo, ...rest } = todoItem;
@@ -29,6 +32,7 @@ const TodoList = ({ todo, deleteTodo, updateTodo }) => {
 
   const cancelBtn = () => {
     setModify(false);
+    setTodoItem(todos);
   };
 
   const checkboxhandler = (e) => {
@@ -47,9 +51,7 @@ const TodoList = ({ todo, deleteTodo, updateTodo }) => {
       <label>
         <input
           type="checkbox"
-          id={`${id}`}
           className="check"
-          name={`todo${id}`}
           defaultChecked={isCompleted}
           onChange={checkboxhandler}
         />

@@ -1,5 +1,5 @@
-import AddTodo from "./AddTodo";
-import TodoList from "./TodoList";
+import AddTodo from "../components/AddTodo";
+import TodoList from "../components/TodoList";
 import { useEffect, useState } from "react";
 import client from "../shared/Request";
 
@@ -9,25 +9,19 @@ const Todo = () => {
   useEffect(() => {
     console.log("랜더링 성공");
     const getTodo = async () => {
-      await client.get("/todos").then((res) => {
-        console.log(res.data);
-        setTodoItems(res.data);
-      });
+      const res = await client.get("/todos");
+      setTodoItems(res.data);
     };
     getTodo();
   }, []);
 
   const addTodo = async (createTodo) => {
-    await client
-      .post("/todos", createTodo, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        setTodoItems([...todoItems, res.data]);
-      });
+    const res = await client.post("/todos", createTodo, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    setTodoItems([...todoItems, res.data]);
   };
 
   const updateTodo = async (updateItem) => {
@@ -38,15 +32,19 @@ const Todo = () => {
         "Content-Type": "application/json",
       },
       data: JSON.stringify({
-        todo: `${updateItem.todo}`,
+        todo: updateItem.todo,
         isCompleted: updateItem.isCompleted,
       }),
-    })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((error) => console.log(error));
+    }).then(() => {
+      setTodoItems(
+        todoItems.map((item) =>
+          item.id === updateItem.id ? { ...item, todo: updateItem.todo } : item
+        )
+      );
+    });
   };
+
+  console.log(todoItems);
 
   const deleteTodo = async (deleteItem) => {
     await client
@@ -60,11 +58,11 @@ const Todo = () => {
     <div>
       <AddTodo addTodo={addTodo} />
       {todoItems.length > 0 ? (
-        todoItems.map((todo) => {
+        todoItems.map((todos) => {
           return (
             <TodoList
-              key={todo.id}
-              todo={todo}
+              key={todos.id}
+              todos={todos}
               updateTodo={updateTodo}
               deleteTodo={deleteTodo}
             />

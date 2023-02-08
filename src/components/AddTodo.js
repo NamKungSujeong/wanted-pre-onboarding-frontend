@@ -12,6 +12,7 @@ const AddTodo = ({ addTodo }) => {
     addTodo(todoItem);
     setTodoItem({ todo: "" });
   };
+
   const LogOut = () => {
     localStorage.getItem("access_token");
     localStorage.clear();
@@ -22,7 +23,7 @@ const AddTodo = ({ addTodo }) => {
       <input
         data-testid="new-todo-input"
         type="text"
-        placeholder="Add your new Todo"
+        placeholder="todo를 입력해 주세요"
         value={todoItem.todo}
         onChange={(e) => setTodoItem({ todo: e.target.value })}
         autoFocus

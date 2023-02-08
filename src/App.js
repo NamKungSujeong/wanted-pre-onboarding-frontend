@@ -3,7 +3,7 @@ import MainPage from "./pages/MainPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
-import Todo from "./components/Todo";
+import TodoPage from "./pages/TodoPage";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
           <Route path="/" element={<MainPage />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/signin" element={<SignIn />}></Route>
-          <Route path="/todo" element={<Todo />}></Route>
+          <Route path="/todo" element={<TodoPage />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
