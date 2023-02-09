@@ -36,9 +36,7 @@ const SignIn = () => {
         window.location.replace("/todo");
       })
       .catch((error) => {
-        if (error.response.data.statusCode === 401) {
-          alert("아이디 또는 비밀번호를 확인해주세요");
-        }
+        alert("아이디 또는 비밀번호를 확인해주세요");
       });
   };
 

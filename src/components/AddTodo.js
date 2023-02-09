@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styled from "styled-components";
 
 const AddTodo = ({ addTodo }) => {
   const [todoItem, setTodoItem] = useState({
@@ -12,28 +13,49 @@ const AddTodo = ({ addTodo }) => {
     addTodo(todoItem);
     setTodoItem({ todo: "" });
   };
-  const LogOut = () => {
-    localStorage.getItem("access_token");
-    localStorage.clear();
-    window.location.replace("/");
-  };
+
   return (
-    <div>
-      <input
+    <TodoAddBlock>
+      <AddIntput
         data-testid="new-todo-input"
         type="text"
-        placeholder="Add your new Todo"
+        placeholder="Todo를 입력해 주세요."
         value={todoItem.todo}
         onChange={(e) => setTodoItem({ todo: e.target.value })}
         autoFocus
-      />
-      <button data-testid="new-todo-add-button" onClick={addBtn}>
+      ></AddIntput>
+      <AddBtn data-testid="new-todo-add-button" onClick={addBtn}>
         추가
-      </button>
-
-      <button onClick={LogOut}>로그아웃</button>
-    </div>
+      </AddBtn>
+    </TodoAddBlock>
   );
 };
 
 export default AddTodo;
+
+const TodoAddBlock = styled.div`
+  margin-top: 100px;
+  width: 500px;
+`;
+
+const AddIntput = styled.input`
+  width: 300px;
+  height: 30px;
+  border: none;
+  border-bottom: 2px solid black;
+  padding-left: 10px;
+`;
+
+const AddBtn = styled.button`
+  margin-left: 10px;
+  padding: 8px 10px;
+  background-color: #fff;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-weight: 600;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #e9e9e9;
+  }
+`;

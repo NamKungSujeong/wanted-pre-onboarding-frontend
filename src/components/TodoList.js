@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styled from "styled-components";
 
 const TodoList = ({ todo, deleteTodo, updateTodo }) => {
   const { isCompleted } = todo;
@@ -47,7 +48,7 @@ const TodoList = ({ todo, deleteTodo, updateTodo }) => {
   };
 
   return (
-    <li>
+    <Todo>
       <label>
         <input
           type="checkbox"
@@ -57,12 +58,13 @@ const TodoList = ({ todo, deleteTodo, updateTodo }) => {
         />
         {modify ? (
           <>
-            <input
+            <ModifyInput
               data-testid="modify-input"
               type="text"
               value={todoItem.todo}
               onChange={editEventHandler}
-            ></input>
+            ></ModifyInput>
+
             <button data-testid="submit-button" onClick={submitBtn}>
               제출
             </button>
@@ -72,7 +74,8 @@ const TodoList = ({ todo, deleteTodo, updateTodo }) => {
           </>
         ) : (
           <>
-            <span className="inputTodo">{todoItem.todo}</span>
+            <TodoSpan className="inputTodo">{todoItem.todo}</TodoSpan>
+
             <button data-testid="modify-button" onClick={modifyBtn}>
               수정
             </button>
@@ -82,8 +85,36 @@ const TodoList = ({ todo, deleteTodo, updateTodo }) => {
           </>
         )}
       </label>
-    </li>
+    </Todo>
   );
 };
 
 export default TodoList;
+
+const Todo = styled.li`
+  padding: 5px 0;
+
+  button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-weight: 600;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #e9e9e9;
+    }
+  }
+`;
+
+const TodoSpan = styled.span`
+  margin-left: 5px;
+  display: inline-block;
+  width: 250px;
+`;
+
+const ModifyInput = styled.input`
+  width: 250px;
+`;

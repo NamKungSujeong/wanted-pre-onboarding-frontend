@@ -6,11 +6,11 @@ const MainPage = () => {
     <MainPageBlock>
       <Intro>Todo-List</Intro>
       <EnterButtons>
-        <Link to="signup">
-          <button>회원가입</button>
-        </Link>
         <Link to="signin">
           <button>로그인</button>
+        </Link>
+        <Link to="signup">
+          <button>회원가입</button>
         </Link>
       </EnterButtons>
     </MainPageBlock>
