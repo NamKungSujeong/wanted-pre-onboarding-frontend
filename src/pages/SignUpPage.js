@@ -10,13 +10,13 @@ const SignUp = () => {
   const [pw, setPw] = useState("");
   const [disabled, setDisabled] = useState(true);
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem("access_token") !== null) {
-      window.location.replace("/todo");
+      navigate("/todo");
     }
-  }, []);
+  });
 
   const emailRegex =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;

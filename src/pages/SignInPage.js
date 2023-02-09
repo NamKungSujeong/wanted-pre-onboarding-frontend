@@ -6,9 +6,9 @@ import axios from "axios";
 const SignIn = () => {
   useEffect(() => {
     if (localStorage.getItem("access_token") !== null) {
-      window.location.replace("/todo");
+      window.location.replace("/wanted-pre-onboarding-frontend/todo");
     }
-  }, []);
+  });
 
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
@@ -33,7 +33,7 @@ const SignIn = () => {
         console.log(res);
         localStorage.setItem("access_token", res.data.access_token);
         console.log("로그인 성공");
-        window.location.replace("/todo");
+        window.location.replace("/wanted-pre-onboarding-frontend/todo");
       })
       .catch(() => {
         alert("아이디 또는 비밀번호를 확인해주세요");

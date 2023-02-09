@@ -3,9 +3,11 @@ import TodoList from "../components/TodoList";
 import { useEffect, useState } from "react";
 import client from "../shared/Request";
 import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
 
-const Todo = () => {
+const Todo = ({ match }) => {
   const [todoItems, setTodoItems] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("랜더링 성공");
@@ -63,9 +65,8 @@ const Todo = () => {
   let todoCount = todoItems.filter((todonum) => todonum.isCompleted === false);
 
   const LogOut = () => {
-    localStorage.getItem("access_token");
     localStorage.clear();
-    window.location.replace("/");
+    navigate("/");
   };
   return (
     <TodoPage>
@@ -88,6 +89,9 @@ const Todo = () => {
         )}
       </TodoListBlock>
       <LogOutBtn onClick={LogOut}>로그아웃</LogOutBtn>
+      <Link to="/">
+        <HomeBtn>홈</HomeBtn>
+      </Link>
     </TodoPage>
   );
 };
@@ -117,6 +121,10 @@ const LogOutBtn = styled.button`
     cursor: pointer;
     background-color: #e9e9e9;
   }
+`;
+
+const HomeBtn = styled(LogOutBtn)`
+  width: 450px;
 `;
 
 const TodoCount = styled.div`
