@@ -61,6 +61,8 @@ const Todo = () => {
     setTodoItems(newTodoItems);
   };
 
+  let todoCount = todoItems.filter((todonum) => todonum.isCompleted === false);
+
   const LogOut = () => {
     localStorage.getItem("access_token");
     localStorage.clear();
@@ -69,6 +71,7 @@ const Todo = () => {
   return (
     <TodoPage>
       <AddTodo addTodo={addTodo} />
+      <TodoCount>📍 {todoCount.length} todos</TodoCount>
       <TodoListBlock>
         {todoItems.length > 0 ? (
           todoItems.map((todo) => {
@@ -100,7 +103,7 @@ const TodoPage = styled.main`
 `;
 
 const TodoListBlock = styled.div`
-  margin: 20px 0;
+  margin: 15px 0;
 `;
 
 const LogOutBtn = styled.button`
@@ -115,4 +118,8 @@ const LogOutBtn = styled.button`
     cursor: pointer;
     background-color: #e9e9e9;
   }
+`;
+
+const TodoCount = styled.div`
+  margin-top: 20px;
 `;
