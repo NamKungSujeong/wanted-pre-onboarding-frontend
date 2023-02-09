@@ -16,7 +16,6 @@ const Todo = () => {
     };
     getTodo();
   }, []);
-  console.log(todoItems);
 
   const addTodo = async (createTodo) => {
     const res = await client.post("/todos", createTodo, {

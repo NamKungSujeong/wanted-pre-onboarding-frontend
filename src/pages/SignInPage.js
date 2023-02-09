@@ -35,7 +35,7 @@ const SignIn = () => {
         console.log("로그인 성공");
         window.location.replace("/todo");
       })
-      .catch((error) => {
+      .catch(() => {
         alert("아이디 또는 비밀번호를 확인해주세요");
       });
   };
@@ -48,7 +48,7 @@ const SignIn = () => {
           required
           type="email"
           data-testid="email-input"
-          placeholder="이메일을 입력해 주세요."
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -56,7 +56,7 @@ const SignIn = () => {
           required
           type="password"
           data-testid="password-input"
-          placeholder="비밀번호를 입력해 주세요."
+          placeholder="Password"
           value={pw}
           onChange={(e) => setPw(e.target.value)}
         />
