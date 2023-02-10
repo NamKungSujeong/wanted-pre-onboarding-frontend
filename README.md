@@ -9,8 +9,11 @@
 
 ## 로컬 실행 방법
 
-- 의존성 설치: ```$ npm install``` 
-- 로컬 실행: ```$ npm start``` 
+```
+$ git clone 
+$ npm install
+$ npm start
+``` 
 
 위 순서대로 실행하면 http://localhost:3000/wanted-pre-onboarding-frontend 가 실행됩니다.
 
