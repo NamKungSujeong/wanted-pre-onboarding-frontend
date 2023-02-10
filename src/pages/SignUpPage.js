@@ -116,7 +116,7 @@ export default SignUp;
 
 const SignUpPage = styled.main`
   width: 300px;
-  margin: 150px auto 0;
+  margin: 100px auto 0;
   padding: 100px 25px;
   text-align: center;
   border: 1px solid black;

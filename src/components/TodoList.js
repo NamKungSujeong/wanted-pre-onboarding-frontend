@@ -24,6 +24,9 @@ const TodoList = ({ todo, deleteTodo, updateTodo }) => {
   };
 
   const submitBtn = () => {
+    if (todoItem.todo.trim().length === 0) {
+      return;
+    }
     updateTodo(todoItem);
     setModify(false);
   };
