@@ -15,7 +15,7 @@ const AddTodo = ({ addTodo }) => {
   };
 
   return (
-    <TodoAddBlock>
+    <TodoAddSection>
       <AddIntput
         data-testid="new-todo-input"
         type="text"
@@ -27,13 +27,13 @@ const AddTodo = ({ addTodo }) => {
       <AddBtn data-testid="new-todo-add-button" onClick={addBtn}>
         추가
       </AddBtn>
-    </TodoAddBlock>
+    </TodoAddSection>
   );
 };
 
 export default AddTodo;
 
-const TodoAddBlock = styled.div`
+const TodoAddSection = styled.section`
   margin-top: 100px;
   width: 500px;
 `;

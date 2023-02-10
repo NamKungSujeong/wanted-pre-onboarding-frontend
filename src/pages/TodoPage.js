@@ -14,21 +14,29 @@ const Todo = () => {
       navigate("/signin");
       return;
     }
-    const getTodo = async () => {
-      const res = await client.get("/todos");
-      console.log(res);
-      setTodoItems(res.data);
-    };
-    getTodo();
   });
 
+  useEffect(() => {
+    const getTodo = async () => {
+      await client.get("/todos").then((res) => {
+        console.log(res);
+        setTodoItems(res.data);
+      });
+    };
+    getTodo();
+  }, []);
+
   const addTodo = async (createTodo) => {
-    const res = await client.post("/todos", createTodo, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    setTodoItems([...todoItems, res.data]);
+    await client
+      .post("/todos", createTodo, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setTodoItems([...todoItems, res.data]);
+      });
   };
 
   const updateTodo = async (updateItem) => {
@@ -42,7 +50,8 @@ const Todo = () => {
         todo: updateItem.todo,
         isCompleted: updateItem.isCompleted,
       }),
-    }).then(() => {
+    }).then((res) => {
+      console.log(res);
       setTodoItems(
         todoItems.map((item) =>
           item.id === updateItem.id
@@ -67,15 +76,15 @@ const Todo = () => {
 
   let todoCount = todoItems.filter((todonum) => todonum.isCompleted === false);
 
-  const LogOut = () => {
+  const logOut = () => {
     localStorage.clear();
     navigate("/");
   };
   return (
     <TodoPage>
       <AddTodo addTodo={addTodo} />
-      <TodoCount>📍 {todoCount.length} todos</TodoCount>
-      <TodoListBlock>
+      <TodoCountSection>📍 {todoCount.length} todos</TodoCountSection>
+      <TodoListUl>
         {todoItems.length > 0 ? (
           todoItems.map((todo) => {
             return (
@@ -90,11 +99,11 @@ const Todo = () => {
         ) : (
           <div>Todo를 추가해 주세요</div>
         )}
-      </TodoListBlock>
-      <LogOutBtn onClick={LogOut}>로그아웃</LogOutBtn>
+      </TodoListUl>
       <Link to="/">
         <HomeBtn>홈</HomeBtn>
       </Link>
+      <LogOutBtn onClick={logOut}>로그아웃</LogOutBtn>
     </TodoPage>
   );
 };
@@ -108,7 +117,7 @@ const TodoPage = styled.main`
   flex-direction: column;
 `;
 
-const TodoListBlock = styled.div`
+const TodoListUl = styled.ul`
   margin: 15px 0;
 `;
 
@@ -130,6 +139,6 @@ const HomeBtn = styled(LogOutBtn)`
   width: 450px;
 `;
 
-const TodoCount = styled.div`
+const TodoCountSection = styled.section`
   margin-top: 20px;
 `;
