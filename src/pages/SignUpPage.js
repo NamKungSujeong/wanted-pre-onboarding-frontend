@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import Api from "../utils/Api";
 
 const SignUp = () => {
   const [message, setMessage] = useState("");
@@ -53,28 +53,24 @@ const SignUp = () => {
 
   const signup = (e) => {
     e.preventDefault();
-    if (emailRegex.test(email) && validityPw.test(pw)) {
-      axios({
-        method: "post",
-        url: "https://pre-onboarding-selection-task.shop/auth/signup",
+    Api.post(
+      "/auth/signup",
+      { email: email, password: pw },
+      {
         Headers: {
           "Content-Type": "application/json",
         },
-        data: {
-          email: email,
-          password: pw,
-        },
+      }
+    )
+      .then((res) => {
+        console.log(res);
+        navigate("/signin");
       })
-        .then((res) => {
-          console.log(res);
-          navigate("/signin");
-        })
-        .catch((error) => {
-          if (error.response.data.statusCode === 400) {
-            alert(error.response.data.message);
-          }
-        });
-    }
+      .catch((error) => {
+        if (error.response.data.statusCode === 400) {
+          alert(error.response.data.message);
+        }
+      });
   };
 
   return (

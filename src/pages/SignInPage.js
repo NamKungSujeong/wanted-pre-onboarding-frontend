@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import Api from "../utils/Api";
 
 const SignIn = () => {
   useEffect(() => {
@@ -16,17 +16,15 @@ const SignIn = () => {
   const signin = (e) => {
     e.preventDefault();
 
-    axios({
-      method: "post",
-      url: "https://pre-onboarding-selection-task.shop/auth/signin",
-      Headers: {
-        "Content-Type": "application/json",
-      },
-      data: {
-        email: email,
-        password: pw,
-      },
-    })
+    Api.post(
+      "/auth/signin",
+      { email: email, password: pw },
+      {
+        Headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((res) => {
         console.log(res);
         localStorage.setItem("access_token", res.data.access_token);

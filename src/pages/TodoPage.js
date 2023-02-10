@@ -1,7 +1,7 @@
 import AddTodo from "../components/AddTodo";
 import TodoList from "../components/TodoList";
 import { useEffect, useState } from "react";
-import client from "../utils/Api";
+import Api from "../utils/Api";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -16,9 +16,10 @@ const Todo = () => {
     }
   });
 
+  // read
   useEffect(() => {
     const getTodo = async () => {
-      await client.get("/todos").then((res) => {
+      await Api.get("/todos").then((res) => {
         console.log(res);
         setTodoItems(res.data);
       });
@@ -26,21 +27,21 @@ const Todo = () => {
     getTodo();
   }, []);
 
+  // create
   const addTodo = async (createTodo) => {
-    await client
-      .post("/todos", createTodo, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        setTodoItems([...todoItems, res.data]);
-      });
+    await Api.post("/todos", createTodo, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      console.log(res);
+      setTodoItems([...todoItems, res.data]);
+    });
   };
 
+  //update
   const updateTodo = async (updateItem) => {
-    await client({
+    await Api({
       method: "put",
       url: `/todos/${updateItem.id}`,
       headers: {
@@ -66,10 +67,9 @@ const Todo = () => {
     });
   };
 
+  //delete
   const deleteTodo = async (deleteItem) => {
-    await client
-      .delete(`/todos/${deleteItem.id}`)
-      .then((res) => console.log(res));
+    await Api.delete(`/todos/${deleteItem.id}`).then((res) => console.log(res));
     let newTodoItems = todoItems.filter((todo) => todo.id !== deleteItem.id);
     setTodoItems(newTodoItems);
   };
