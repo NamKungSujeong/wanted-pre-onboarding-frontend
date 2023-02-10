@@ -14,7 +14,6 @@ const Todo = () => {
       navigate("/signin");
       return;
     }
-    //Read
     const getTodo = async () => {
       const res = await client.get("/todos");
       console.log(res);
@@ -23,18 +22,14 @@ const Todo = () => {
     getTodo();
   });
 
-  //Create
-
-  const createTodo = async (createItem) => {
-    const res = await client.post("/todos", createItem, {
+  const addTodo = async (createTodo) => {
+    const res = await client.post("/todos", createTodo, {
       headers: {
         "Content-Type": "application/json",
       },
     });
     setTodoItems([...todoItems, res.data]);
   };
-
-  //Update
 
   const updateTodo = async (updateItem) => {
     await client({
@@ -62,7 +57,6 @@ const Todo = () => {
     });
   };
 
-  // Delete
   const deleteTodo = async (deleteItem) => {
     await client
       .delete(`/todos/${deleteItem.id}`)
@@ -79,7 +73,7 @@ const Todo = () => {
   };
   return (
     <TodoPage>
-      <AddTodo addTodo={createTodo} />
+      <AddTodo addTodo={addTodo} />
       <TodoCount>📍 {todoCount.length} todos</TodoCount>
       <TodoListBlock>
         {todoItems.length > 0 ? (

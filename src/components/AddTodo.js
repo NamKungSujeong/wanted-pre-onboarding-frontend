@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-const AddTodo = ({ createTodo }) => {
+const AddTodo = ({ addTodo }) => {
   const [todoItem, setTodoItem] = useState({
     todo: "",
   });
@@ -10,7 +10,7 @@ const AddTodo = ({ createTodo }) => {
     if (todoItem.todo.trim().length === 0) {
       return;
     }
-    createTodo(todoItem);
+    addTodo(todoItem);
     setTodoItem({ todo: "" });
   };
 
