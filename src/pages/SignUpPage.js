@@ -29,7 +29,7 @@ const SignUp = () => {
     }
   };
 
-  const EmailValidation = (e) => {
+  const emailValidation = (e) => {
     setEmail(e.target.value);
 
     if (!emailRegex.test(email)) {
@@ -40,7 +40,7 @@ const SignUp = () => {
     }
   };
 
-  const PwValidation = (e) => {
+  const pwValidation = (e) => {
     setPw(e.target.value);
 
     if (!validityPw.test(pw)) {
@@ -87,7 +87,7 @@ const SignUp = () => {
           data-testid="email-input"
           placeholder="이메일을 입력해 주세요"
           value={email}
-          onChange={EmailValidation}
+          onChange={emailValidation}
         />
         <ErrorMessage>{message}</ErrorMessage>
         <input
@@ -96,7 +96,7 @@ const SignUp = () => {
           data-testid="password-input"
           placeholder="비밀번호를 입력해주세요"
           value={pw}
-          onChange={PwValidation}
+          onChange={pwValidation}
         />
         <ErrorMessage>{pwmessage}</ErrorMessage>
         <button
