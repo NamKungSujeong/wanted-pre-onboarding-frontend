@@ -13,9 +13,7 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
 
-  // 유효성 검사
-
-  const login = (e) => {
+  const signin = (e) => {
     e.preventDefault();
 
     axios({
@@ -60,7 +58,7 @@ const SignIn = () => {
           value={pw}
           onChange={(e) => setPw(e.target.value)}
         />
-        <button data-testid="signin-button" onClick={login}>
+        <button data-testid="signin-button" onClick={signin}>
           로그인
         </button>
         <OtherLinks>

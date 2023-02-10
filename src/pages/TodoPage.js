@@ -1,32 +1,40 @@
 import AddTodo from "../components/AddTodo";
 import TodoList from "../components/TodoList";
 import { useEffect, useState } from "react";
-import client from "../shared/Request";
+import client from "../utils/Api";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 
-const Todo = ({ match }) => {
+const Todo = () => {
   const [todoItems, setTodoItems] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("랜더링 성공");
+    if (localStorage.getItem("access_token") === null) {
+      navigate("/signin");
+      return;
+    }
+    //Read
     const getTodo = async () => {
       const res = await client.get("/todos");
       console.log(res);
       setTodoItems(res.data);
     };
     getTodo();
-  }, []);
+  });
 
-  const addTodo = async (createTodo) => {
-    const res = await client.post("/todos", createTodo, {
+  //Create
+
+  const createTodo = async (createItem) => {
+    const res = await client.post("/todos", createItem, {
       headers: {
         "Content-Type": "application/json",
       },
     });
     setTodoItems([...todoItems, res.data]);
   };
+
+  //Update
 
   const updateTodo = async (updateItem) => {
     await client({
@@ -54,6 +62,7 @@ const Todo = ({ match }) => {
     });
   };
 
+  // Delete
   const deleteTodo = async (deleteItem) => {
     await client
       .delete(`/todos/${deleteItem.id}`)
@@ -70,7 +79,7 @@ const Todo = ({ match }) => {
   };
   return (
     <TodoPage>
-      <AddTodo addTodo={addTodo} />
+      <AddTodo addTodo={createTodo} />
       <TodoCount>📍 {todoCount.length} todos</TodoCount>
       <TodoListBlock>
         {todoItems.length > 0 ? (

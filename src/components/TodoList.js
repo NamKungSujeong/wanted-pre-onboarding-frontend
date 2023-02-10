@@ -6,9 +6,6 @@ const TodoList = ({ todo, deleteTodo, updateTodo }) => {
   const [todoItem, setTodoItem] = useState(todo);
   const [modify, setModify] = useState(false);
 
-  // console.log(todos);
-  // console.log(todoItem);
-
   const editEventHandler = (e) => {
     const { todo, ...rest } = todoItem;
 

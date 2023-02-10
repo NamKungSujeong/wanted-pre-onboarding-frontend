@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -9,7 +9,6 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [disabled, setDisabled] = useState(true);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,6 +16,8 @@ const SignUp = () => {
       navigate("/todo");
     }
   });
+
+  // 유효성 검사
 
   const emailRegex =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -27,7 +28,6 @@ const SignUp = () => {
       setDisabled(false);
     }
   };
-  const emailRef = useRef();
 
   const EmailValidation = (e) => {
     setEmail(e.target.value);
@@ -51,7 +51,7 @@ const SignUp = () => {
     }
   };
 
-  const Sign = (e) => {
+  const signup = (e) => {
     e.preventDefault();
     if (emailRegex.test(email) && validityPw.test(pw)) {
       axios({
@@ -88,7 +88,6 @@ const SignUp = () => {
           placeholder="이메일을 입력해 주세요"
           value={email}
           onChange={EmailValidation}
-          ref={emailRef}
         />
         <ErrorMessage>{message}</ErrorMessage>
         <input
@@ -100,7 +99,11 @@ const SignUp = () => {
           onChange={PwValidation}
         />
         <ErrorMessage>{pwmessage}</ErrorMessage>
-        <button data-testid="signup-button" onClick={Sign} disabled={disabled}>
+        <button
+          data-testid="signup-button"
+          onClick={signup}
+          disabled={disabled}
+        >
           회원가입
         </button>
         <OtherLinks>
