@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import styled from "styled-components";
 
 const TodoList = ({ todo, deleteTodo, updateTodo }) => {
@@ -57,34 +57,35 @@ const TodoList = ({ todo, deleteTodo, updateTodo }) => {
           onChange={checkboxhandler}
         />
         {modify ? (
-          <>
-            <ModifyInput
-              data-testid="modify-input"
-              type="text"
-              value={todoItem.todo}
-              onChange={editEventHandler}
-            ></ModifyInput>
-
-            <button data-testid="submit-button" onClick={submitBtn}>
-              제출
-            </button>
-            <button data-testid="cancel-button" onClick={cancelBtn}>
-              취소
-            </button>
-          </>
+          <ModifyInput
+            data-testid="modify-input"
+            type="text"
+            value={todoItem.todo}
+            onChange={editEventHandler}
+          ></ModifyInput>
         ) : (
-          <>
-            <TodoSpan className="inputTodo">{todoItem.todo}</TodoSpan>
-
-            <button data-testid="modify-button" onClick={modifyBtn}>
-              수정
-            </button>
-            <button data-testid="delete-button" onClick={deleteBtn}>
-              삭제
-            </button>
-          </>
+          <TodoSpan className="inputTodo">{todoItem.todo}</TodoSpan>
         )}
       </label>
+      {modify ? (
+        <Fragment>
+          <button data-testid="submit-button" onClick={submitBtn}>
+            제출
+          </button>
+          <button data-testid="cancel-button" onClick={cancelBtn}>
+            취소
+          </button>
+        </Fragment>
+      ) : (
+        <Fragment>
+          <button data-testid="modify-button" onClick={modifyBtn}>
+            수정
+          </button>
+          <button data-testid="delete-button" onClick={deleteBtn}>
+            삭제
+          </button>
+        </Fragment>
+      )}
     </Todo>
   );
 };

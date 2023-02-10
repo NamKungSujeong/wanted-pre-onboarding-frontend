@@ -17,34 +17,37 @@ const SignUp = () => {
     }
   });
 
-  // 유효성 검사
+  // 유효성 검사 정규식
+  const emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]/i;
 
-  const emailRegex =
-    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-  const validityPw = /^(?=.*[a-zA-Z0-9]).{7,}$/;
-
+  // 둘의 조건을 모두 만족해야 disabled가 풀리는 함수
   const btnDisabled = () => {
-    if (emailRegex.test(email) && validityPw.test(pw)) {
+    if (emailRegex.test(email) && pw.length >= 7) {
       setDisabled(false);
+      return;
     }
   };
 
+  //이메일 유효성 검사
   const emailValidation = (e) => {
     setEmail(e.target.value);
 
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(email) || e.target.value.length === 0) {
       setMessage("이메일 형식이 올바르지 않습니다.");
+      setDisabled(true);
     } else {
       setMessage("");
       btnDisabled();
     }
   };
 
+  // 비밀번호 유효성 검사
   const pwValidation = (e) => {
     setPw(e.target.value);
 
-    if (!validityPw.test(pw)) {
+    if (e.target.value.length < 8) {
       setPwMessage("비밀번호 형식이 올바르지 않습니다.");
+      setDisabled(true);
     } else {
       setPwMessage("");
       btnDisabled();
