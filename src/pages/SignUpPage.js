@@ -61,8 +61,8 @@ const SignUp = () => {
           "Content-Type": "application/json",
         },
         data: {
-          email: `${email}`,
-          password: `${pw}`,
+          email: email,
+          password: pw,
         },
       })
         .then((res) => {
